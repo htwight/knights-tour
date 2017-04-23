@@ -48,7 +48,7 @@ public class Main extends Application
 		buttons.getChildren().addAll(btnNumbers, btnPath, btnAnimate);
 		
 		//Program Output
-		Text txtOutput = new Text("Hello World");
+		Text txtOutput = new Text();
 
 		BorderPane root = new BorderPane();		
 		HBox userInfo = new HBox();
