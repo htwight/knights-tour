@@ -3,19 +3,24 @@
  * @author holden
  *
  */
-public class Tile {
+public class Square {
 
-	boolean visited;
+	private boolean visited;
 	private int move;
 	private int weight;
-	Tile next;
+	Square next;
 	int x;
 	int y;
 	
-	public Tile(int x, int y)
+	public Square(int x, int y)
 	{
 		this.x = x;
 		this.y = y;
+	}
+	
+	public void setVisited(boolean visited)
+	{
+		this.visited = visited;
 	}
 	
 	public void setMove(int move)
@@ -26,6 +31,11 @@ public class Tile {
 	public void setWeight(int weight)
 	{
 		this.weight = weight;
+	}
+	
+	public boolean getVisited()
+	{
+		return visited;
 	}
 	
 	public int getMove()

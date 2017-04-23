@@ -7,7 +7,7 @@ import java.util.ArrayList;
  */
 public class Board {
 
-	private Tile[][] tiles;
+	private Square[][] squares;
 	private int width;
 	private int height;
 	
@@ -15,34 +15,34 @@ public class Board {
 	{
 		this.width = width;
 		this.height = height;
-		tiles = new Tile[width][height];
+		squares = new Square[width][height];
 		for (int y = 0; y < height; y++)
 			for (int x = 0; x < width; x++)
-				tiles[x][y] = new Tile(x, y);
+				squares[x][y] = new Square(x, y);
 	}
 	
-	public Tile[][] findTour()
+	public Square[][] findTour()
 	{
-		Tile current = tiles[0][0];
+		Square current = squares[0][0];
 		for (int i = 0; i < width * height; i++)
 		{
-			current.visited = true;
-			current.setMove(i + 1);
+			current.setVisited(true);
+			current.setMove(i);
 			current.next = findNextMove(current);
 			current = current.next;
 		}
-		return tiles;
+		return squares;
 	}
 	
-	private Tile findNextMove(Tile current)
+	private Square findNextMove(Square current)
 	{
-		ArrayList<Tile> moves = getMoves(current);
+		ArrayList<Square> moves = getMoves(current);
 		if (moves.size() == 0)
-			return new Tile(0,0);
-		Tile nextMove = moves.get(0);
+			return new Square(0,0);
+		Square nextMove = moves.get(0);
 		for (int i = 0; i < moves.size(); i++)
 		{
-			setWeights(moves.get(i));
+			calcWeight(moves.get(i));
 			if (moves.get(i).getWeight() < nextMove.getWeight())
 				nextMove = moves.get(i);
 		}
@@ -50,7 +50,7 @@ public class Board {
 		
 	}
 	
-	private ArrayList<Tile> getMoves(Tile t)
+	private ArrayList<Square> getMoves(Square s)
 	{
 		//Represents distance moved {left/right, up/down}
 		int[][] moveSet = {
@@ -58,18 +58,18 @@ public class Board {
 		        {2, -1}, {1, -2}, {-1, -2}, {-2, -1}
 		};
 		
-		ArrayList<Tile> moves = new ArrayList<>();
+		ArrayList<Square> moves = new ArrayList<>();
 		for (int[] move : moveSet)
-			if (isValidMove(t.x + move[0], t.y + move[1]))
-				if (!tiles[t.x + move[0]][t.y + move[1]].visited)
-					moves.add(tiles[t.x + move[0]][t.y + move[1]]);
+			if (isValidMove(s.x + move[0], s.y + move[1]))
+				if (squares[s.x + move[0]][s.y + move[1]].getVisited() == false)
+					moves.add(squares[s.x + move[0]][s.y + move[1]]);
 		return moves;
 	}
 	
-	private void setWeights(Tile t)
+	private void calcWeight(Square s)
 	{
-		ArrayList<Tile> moves = getMoves(t);
-		t.setWeight(moves.size());
+		ArrayList<Square> moves = getMoves(s);
+		s.setWeight(moves.size());
 	}
 	
 	private boolean isValidMove(int x, int y)
