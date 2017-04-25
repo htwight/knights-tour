@@ -26,9 +26,11 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-public class Main extends Application {
+public class Main extends Application
+{
     @Override
-    public void start(Stage primaryStage) {
+    public void start(Stage primaryStage)
+    {
         /* Input UI controls */
         // Input for board width
         Label lblWidth = new Label(String.format("%-9s", "Width:"));
@@ -70,14 +72,17 @@ public class Main extends Application {
         primaryStage.setScene(scene);
         primaryStage.show();
 
-        btnSolve.setOnMouseClicked(e -> {
+        btnSolve.setOnMouseClicked(e ->
+        {
             Board board = null; // Board to be displayed, none if input is
                                 // invalid.
             // Check to make sure the input is an integer for both fields
-            try {
+            try
+            {
                 // Create board to be displayed
                 board = new Board(Integer.parseInt(tfWidth.getText()), Integer.parseInt(tfHeight.getText()));
-            } catch (NumberFormatException ex) {
+            } catch (NumberFormatException ex)
+            {
                 // If input is not integers, inform the user
                 txtOutput.setText("Invalid input. Please enter an integer for width and height.");
             }
@@ -93,7 +98,8 @@ public class Main extends Application {
 
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args)
+    {
         launch(args);
     }
 }

@@ -21,7 +21,8 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 
-public class Board {
+public class Board
+{
 
     private Square[][] squares; // A chessboard made up of squares
     private int files; // Number of columns
@@ -30,7 +31,8 @@ public class Board {
     /*
      * Create a new board consisting of m x n squares.
      */
-    public Board(int files, int ranks) {
+    public Board(int files, int ranks)
+    {
         this.files = files;
         this.ranks = ranks;
         squares = new Square[files][ranks];
@@ -47,7 +49,8 @@ public class Board {
      * Warnsdorff's heuristic is based on moving to the square with the least
      * possible moves, it makes sense to start in a corner.
      */
-    public Square[][] findTour() {
+    public Square[][] findTour()
+    {
         Square current = squares[0][0]; // Start in the top left.
         for (int i = 0; i < files * ranks; i++) // Loop until each square is
                                                 // visited.
@@ -65,7 +68,8 @@ public class Board {
      * the lowest number of possible moves. If there are multiple square that
      * qualify, the first one found is visited.
      */
-    private Square findNextMove(Square current) {
+    private Square findNextMove(Square current)
+    {
         ArrayList<Square> moves = getValidMoves(current); // Get a list of all
                                                           // possible moves
         if (moves.size() == 0) // If there are no possible moves, return to
@@ -90,7 +94,8 @@ public class Board {
      * knight can make. Moves are valid if they are within the domain of the
      * chess board, and have not already been visited.
      */
-    private ArrayList<Square> getValidMoves(Square s) {
+    private ArrayList<Square> getValidMoves(Square s)
+    {
         // Every possible movement of a knight, modeled as {left/right, up/down}
         int[][] moveSet = { { -2, 1 }, { -1, 2 }, { 1, 2 }, { 2, 1 }, { 2, -1 }, { 1, -2 }, { -1, -2 }, { -2, -1 } };
 
@@ -109,7 +114,8 @@ public class Board {
     /*
      * Given a square, set its weight to the number of possible next moves.
      */
-    private void weigh(Square s) {
+    private void weigh(Square s)
+    {
         ArrayList<Square> moves = getValidMoves(s); // Find all possible moves
         s.weight = moves.size(); // Set the weight
     }
@@ -119,7 +125,8 @@ public class Board {
      * and y coordinates must fall inclusively between 0 and files - 1 and ranks
      * - 1, respectively.
      */
-    private boolean isValidMove(int x, int y) {
+    private boolean isValidMove(int x, int y)
+    {
         return x >= 0 && y >= 0 && x < files && y < ranks;
     }
 
@@ -127,7 +134,8 @@ public class Board {
      * Returns the final chessboard labeled with each move number. Squares not
      * visited are marked in red.
      */
-    public StackPane draw() {
+    public StackPane draw()
+    {
         return draw(this.findTour());
     }
 
@@ -136,15 +144,18 @@ public class Board {
      * tour. The chessboard is blue and white, marking unvisitied squares in
      * red.
      */
-    private StackPane draw(Square[][] squares) {
+    private StackPane draw(Square[][] squares)
+    {
         StackPane board = new StackPane(); // Container for the board.
         VBox rows = new VBox(); // Contains each row of the board.
 
         // Iterate through each row
-        for (int i = 0; i < squares.length; i++) {
+        for (int i = 0; i < squares.length; i++)
+        {
             HBox columns = new HBox(); // contains the squares of each row
             // Iterate through each sqaure of the current row
-            for (int j = 0; j < squares[i].length; j++) {
+            for (int j = 0; j < squares[i].length; j++)
+            {
                 Label square = new Label(); // Each square to be labeled with
                                             // its corresponding move
 
@@ -182,7 +193,8 @@ public class Board {
      * coordinates begin at the top left (0, 0) and end at the bottom right
      * (files - 1, ranks - 1).
      */
-    private class Square {
+    private class Square
+    {
 
         private boolean visited; // Whether or not a the knight has visited this
                                  // square.
@@ -194,7 +206,8 @@ public class Board {
         private int y; // The y position of this square.
 
         /* Create a new square given a set of x and y coordinates */
-        public Square(int x, int y) {
+        public Square(int x, int y)
+        {
             this.x = x;
             this.y = y;
         }
