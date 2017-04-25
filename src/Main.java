@@ -1,7 +1,14 @@
 /**
- * 
+ * A program that displays a knight's tour on an m x n chessboard. The knight's tour is a
+ * set of moves made by the knight, such that all squares are visited, and no square is
+ * visited more than once. The knight moves in L-shaped patterns two sqaures in one direction,
+ * then one more square perpendicular to the previous 2.
+ *  
  * @author holden
  *
+ * This code is not published under any copyright license. 
+ * Feel free to do whatever you want with it, including
+ * stealing it and selling it.
  */
 
 import javafx.application.Application;
@@ -23,84 +30,72 @@ public class Main extends Application
 	@Override
 	public void start(Stage primaryStage)
 	{
-		//Input UI controls
+		/* Input UI controls */
+		//Input for board width
 		Label lblWidth = new Label(String.format("%-9s", "Width:"));
-		Label lblHeight = new Label(String.format("%-9s", "Height:"));
 		TextField tfWidth = new TextField();
 		tfWidth.setPrefColumnCount(3);
+		//input for board height
+		Label lblHeight = new Label(String.format("%-9s", "Height:"));		
 		TextField tfHeight = new TextField();
 		tfHeight.setPrefColumnCount(3);
 		
-		//Containers for UI controls
+		/* Containers for UI controls */
+		//Holds label and textField for width
 		HBox widthContainer = new HBox();
 		widthContainer.getChildren().addAll(lblWidth, tfWidth);
+		////Holds label and textField for height, as well as the solve button.
 		HBox heightContainer = new HBox();
-		heightContainer.getChildren().addAll(lblHeight, tfHeight);
+		Button btnSolve = new Button("Show Moves");	//Find and display knight's tour given width and height
+		heightContainer.getChildren().addAll(lblHeight, tfHeight, btnSolve);
+		//Display UI controls vertically
 		VBox uiControls = new VBox();
 		uiControls.getChildren().addAll(widthContainer, heightContainer);
 		uiControls.setMinWidth(300);
 		
-		//Path buttons
-		Button btnNumbers = new Button("Show Moves");
-		Button btnPath = new Button("Show Path");
-		Button btnAnimate = new Button("Play Animation");
-		HBox buttons = new HBox();
-		buttons.getChildren().addAll(btnNumbers, btnPath, btnAnimate);
 		
 		//Program Output
-		Text txtOutput = new Text();
+		Text txtOutput = new Text("Boards larger than 30x30 may have problems rendering properly within\n"
+								+ "the size of the original window. (800x900)");
 
-		BorderPane root = new BorderPane();		
+		//Entire display
+		BorderPane root = new BorderPane();
+		//Display UI and output at the top
 		HBox userInfo = new HBox();
 		userInfo.setPadding(new Insets(10));
 		userInfo.getChildren().addAll(uiControls, txtOutput);
-		root.setBottom(buttons);
 		root.setTop(userInfo);
-		Scene scene = new Scene(root, 800, 500);
+		//Show scene
+		Scene scene = new Scene(root, 800, 900);
 		primaryStage.setScene(scene);
 		primaryStage.show();
 		
-		btnNumbers.setOnMouseClicked(e -> {
-			Board board = new Board(Integer.parseInt(tfWidth.getText()),Integer.parseInt(tfHeight.getText()));
-			StackPane solution = drawBoardNumbers(board.findTour());
+		btnSolve.setOnMouseClicked(e -> 
+		{
+			Board board = null;	//Board to be displayed, none if input is invalid.
+			//Check to make sure the input is an integer for both fields
+			try
+			{
+				//Create board to be displayed
+				board = new Board(Integer.parseInt(tfWidth.getText()), Integer.parseInt(tfHeight.getText()));
+			} 
+			catch (NumberFormatException ex) 
+			{
+				//If input is not integers, inform the user
+				txtOutput.setText("Invalid input. Please enter an integer for width and height.");
+			}		
+			
+			//Finally, draw the board, with knights tour solution, in the center of the stage.
+			StackPane solution = board.draw();
 			solution.setAlignment(Pos.CENTER);
+			solution.setPadding(new Insets(10));
 			root.setCenter(solution);
-		});
+			txtOutput.setText("Knights Tour. Any squares marked red were not visited.");
+		});		
 		
 	}
 	public static void main(String[] args)
 	{
 		launch(args);
-	}
-	
-	private static StackPane drawBoardNumbers(Square[][] squares)
-	{
-		StackPane board = new StackPane();
-		VBox rows = new VBox();
-		
-		for (int i = 0; i < squares.length; i++)
-		{			
-			HBox columns = new HBox();
-			for (int j = 0; j < squares[i].length; j++)
-			{				
-				Label square = new Label();
-				if (i % 2 == 0 && j % 2 == 1 || i % 2 == 1 && j % 2 == 0)
-					square.setStyle("-fx-background-color:#F7F7F7");
-				else
-					square.setStyle("-fx-background-color:#9DD3Df");
-				square.setMinSize(20, 20);
-				square.setText(String.format("%2d", squares[i][j].getMove()));
-				columns.getChildren().add(square);
-			}
-			columns.setAlignment(Pos.CENTER);
-			rows.getChildren().add(columns);
-		}
-		
-		rows.setAlignment(Pos.CENTER);
-		board.setStyle("-fx-border-width:3");
-		board.getChildren().add(rows);
-		return board;
-	}
-	
-	
+	}	
 }
