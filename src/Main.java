@@ -47,9 +47,7 @@ public class Main extends Application
         widthContainer.getChildren().addAll(lblWidth, tfWidth);
         //// Holds label and textField for height, as well as the solve button.
         HBox heightContainer = new HBox();
-        Button btnSolve = new Button("Show Moves"); // Find and display knight's
-                                                    // tour given width and
-                                                    // height
+        Button btnSolve = new Button("Show Moves"); // Find and display knight's tour given width and height
         heightContainer.getChildren().addAll(lblHeight, tfHeight, btnSolve);
         // Display UI controls vertically
         VBox uiControls = new VBox();
@@ -74,8 +72,7 @@ public class Main extends Application
 
         btnSolve.setOnMouseClicked(e ->
         {
-            Board board = null; // Board to be displayed, none if input is
-                                // invalid.
+            Board board = null; // Board to be displayed, none if input is invalid.
             // Check to make sure the input is an integer for both fields
             try
             {

@@ -51,13 +51,13 @@ public class Board
      */
     public Square[][] findTour()
     {
-        Square current = squares[0][0]; // Start in the top left.
+        Square current = squares[0][0];         // Start in the top left.
         for (int i = 0; i < files * ranks; i++) // Loop until each square is
                                                 // visited.
         {
-            current.visited = true; // Visit current square
-            current.move = i + 1; // Keep track of when square was visited
-            current = findNextMove(current); // Move to the next square
+            current.visited = true;             // Visit current square
+            current.move = i + 1;               // Keep track of when square was visited
+            current = findNextMove(current);    // Move to the next square
         }
         return squares;
     }
@@ -70,20 +70,14 @@ public class Board
      */
     private Square findNextMove(Square current)
     {
-        ArrayList<Square> moves = getValidMoves(current); // Get a list of all
-                                                          // possible moves
-        if (moves.size() == 0) // If there are no possible moves, return to
-            return new Square(0, 0); // the beginning, which has always been
-                                     // visited.
-        Square nextMove = moves.get(0); // Otherwise, begin considering each
-                                        // possible move.
-        for (int i = 0; i < moves.size(); i++) // Check each possible move
+        ArrayList<Square> moves = getValidMoves(current);   // Get a list of all possible moves
+        if (moves.size() == 0)                              // If there are no possible moves, return to
+            return new Square(0, 0);                        // the beginning, which has always been visited.
+        Square nextMove = moves.get(0);                     // Otherwise, begin considering each possible move.
+        for (int i = 0; i < moves.size(); i++)              // Check each possible move
         {
-            weigh(moves.get(i)); // Find the number of possible moves from each
-                                 // candidate
-            if (moves.get(i).weight < nextMove.weight) // Choose the square with
-                                                       // the lowest number of
-                                                       // moves
+            weigh(moves.get(i)); // Find the number of possible moves from each candidate
+            if (moves.get(i).weight < nextMove.weight) // Choose the square with the lowest number of moves
                 nextMove = moves.get(i);
         }
         return nextMove;
@@ -99,13 +93,9 @@ public class Board
         // Every possible movement of a knight, modeled as {left/right, up/down}
         int[][] moveSet = { { -2, 1 }, { -1, 2 }, { 1, 2 }, { 2, 1 }, { 2, -1 }, { 1, -2 }, { -1, -2 }, { -2, -1 } };
 
-        ArrayList<Square> moves = new ArrayList<>(); // Create a list to store
-                                                     // all valid moves
-        for (int[] move : moveSet) // Cycle through each of the knight's
-                                   // movements
-            if (isValidMove(s.x + move[0], s.y + move[1])) // If the move is
-                                                           // valid, add it to
-                                                           // the list.
+        ArrayList<Square> moves = new ArrayList<>(); // Create a list to store all valid moves
+        for (int[] move : moveSet)                          //Cycle through each of the knight's movements            
+            if (isValidMove(s.x + move[0], s.y + move[1]))  // If the move is valid, add it to the list.
                 if (!squares[s.x + move[0]][s.y + move[1]].visited)
                     moves.add(squares[s.x + move[0]][s.y + move[1]]);
         return moves;
@@ -117,7 +107,7 @@ public class Board
     private void weigh(Square s)
     {
         ArrayList<Square> moves = getValidMoves(s); // Find all possible moves
-        s.weight = moves.size(); // Set the weight
+        s.weight = moves.size();                    // Set the weight
     }
 
     /*
@@ -156,8 +146,7 @@ public class Board
             // Iterate through each sqaure of the current row
             for (int j = 0; j < squares[i].length; j++)
             {
-                Label square = new Label(); // Each square to be labeled with
-                                            // its corresponding move
+                Label square = new Label(); // Each square to be labeled with its corresponding move
 
                 // If the square was not visited, color it red, otherwise, color
                 // it in an
@@ -196,14 +185,11 @@ public class Board
     private class Square
     {
 
-        private boolean visited; // Whether or not a the knight has visited this
-                                 // square.
-        private int weight; // The number of next possible moves to be made from
-                            // this square.
-        private int move; // Starting with 1, the move which the knight visited
-                          // this square.
-        private int x; // The x position of this square.
-        private int y; // The y position of this square.
+        private boolean visited;    // Whether or not a the knight has visited this square.
+        private int weight;         // The number of next possible moves to be made from this square.
+        private int move;           // Starting with 1, the move which the knight visited this square.
+        private int x;              // The x position of this square.
+        private int y;              // The y position of this square.
 
         /* Create a new square given a set of x and y coordinates */
         public Square(int x, int y)
