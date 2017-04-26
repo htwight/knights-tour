@@ -77,7 +77,7 @@ public class KnightsTour extends Application
             try
             {
                 // Create board to be displayed
-                board = new Board(Integer.parseInt(tfWidth.getText()), Integer.parseInt(tfHeight.getText()));
+                board = new Board(Integer.parseInt(tfHeight.getText()), Integer.parseInt(tfWidth.getText()));
             } catch (NumberFormatException ex)
             {
                 // If input is not integers, inform the user
