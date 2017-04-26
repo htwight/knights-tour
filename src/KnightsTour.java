@@ -26,7 +26,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-public class Main extends Application
+public class KnightsTour extends Application
 {
     @Override
     public void start(Stage primaryStage)
