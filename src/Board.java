@@ -151,7 +151,7 @@ public class Board
                 // If the square was not visited, color it red, otherwise, color
                 // it in an
                 // alternating blue and white color.
-                if (squares[i][j].move == 0)
+                if (squares[i][j].visited == false)
                     square.setStyle("-fx-background-color:#DC143C");
                 else if (i % 2 == 0 && j % 2 == 1 || i % 2 == 1 && j % 2 == 0)
                     square.setStyle("-fx-background-color:#9DD3Df");
